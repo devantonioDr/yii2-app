@@ -12,6 +12,30 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'rules' => [
+                // your rules go here
+                
+            ],
+            // ...
+        ],
+
+        // UrlManager component for client, address, and profile controllers
+        'clientUrlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '/mnt', // Prefix for all URLs
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'client' => 'client/index', // maps `/mnt/client` to `ClientController::actionIndex()`
+                'address' => 'address/index', // maps `/mnt/address` to `AddressController::actionIndex()`
+                'profile' => 'profile/index', // maps `/mnt/profile` to `ProfileController::actionIndex()`
+                // Your custom URL rules here
+            ],
+        ],
+
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
@@ -37,13 +61,13 @@ return [
             'errorAction' => 'site/error',
         ],
         /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+    'urlManager' => [
+    'enablePrettyUrl' => true,
+    'showScriptName' => false,
+    'rules' => [
+    ],
+    ],
+     */
     ],
     'params' => $params,
 ];

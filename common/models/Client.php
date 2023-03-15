@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "client".
+ * This is the model class for table "{{%client}}".
  *
  * @property int $id
  * @property string $email
@@ -22,7 +22,7 @@ class Client extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'client';
+        return '{{%client}}';
     }
 
     /**
@@ -53,7 +53,7 @@ class Client extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Addresses]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\AddressQuery
      */
     public function getAddresses()
     {
@@ -63,10 +63,19 @@ class Client extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Perfils]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\PerfilQuery
      */
     public function getPerfils()
     {
         return $this->hasMany(Perfil::class, ['client_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \common\models\query\ClientQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \common\models\query\ClientQuery(get_called_class());
     }
 }
