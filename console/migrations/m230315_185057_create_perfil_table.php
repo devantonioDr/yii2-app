@@ -14,7 +14,7 @@ class m230315_185057_create_perfil_table extends Migration
     {
         $this->createTable('{{%perfil}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'client_id' => $this->integer()->notNull(),
             'first_name' => $this->string()->notNull(),
             'last_name' => $this->string()->notNull(),
             'date_of_birth' => $this->date(),
@@ -22,7 +22,7 @@ class m230315_185057_create_perfil_table extends Migration
             'description' => $this->text(),
         ]);
         
-        $this->addForeignKey('fk-perfil-user_id', 'perfil', 'user_id', 'client', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk-perfil-user_id', 'perfil', 'client_id', 'client', 'id', 'CASCADE', 'CASCADE');
 
     }
 
