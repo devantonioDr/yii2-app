@@ -4,9 +4,11 @@ namespace common\models;
 
 use Yii;
 
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
+
 use yii\db\ActiveRecord;
+use frontend\resource\Perfil;
+use frontend\resource\Address;
+use common\traits\WithTimeStampsTrait;
 
 /**
  * This is the model class for table "{{%client}}".
@@ -23,6 +25,7 @@ class Client extends ActiveRecord
 
 {
 
+    use WithTimeStampsTrait;
     
     /**
      * {@inheritdoc}
@@ -32,18 +35,7 @@ class Client extends ActiveRecord
         return '{{%client}}';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::class,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ]
-            ],
-        ];
-    }
+
 
     /**
      * {@inheritdoc}
@@ -75,9 +67,9 @@ class Client extends ActiveRecord
      *
      * @return \yii\db\ActiveQuery|\common\models\query\AddressQuery
      */
-    public function getAddresses()
+    public function getAddress()
     {
-        return $this->hasMany(Address::class, ['client_id' => 'id']);
+        return $this->hasOne(Address::class, ['client_id' => 'id']);
     }
 
     /**
@@ -85,9 +77,9 @@ class Client extends ActiveRecord
      *
      * @return \yii\db\ActiveQuery|\common\models\query\PerfilQuery
      */
-    public function getPerfils()
+    public function getPerfil()
     {
-        return $this->hasMany(Perfil::class, ['client_id' => 'id']);
+        return $this->hasOne(Perfil::class, ['client_id' => 'id']);
     }
 
     /**

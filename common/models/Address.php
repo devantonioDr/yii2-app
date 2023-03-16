@@ -1,7 +1,8 @@
 <?php
 
 namespace common\models;
-
+use common\traits\WithTimeStampsTrait;
+  
 use Yii;
 
 /**
@@ -20,6 +21,7 @@ use Yii;
  */
 class Address extends \yii\db\ActiveRecord
 {
+    use WithTimeStampsTrait;
     /**
      * {@inheritdoc}
      */
