@@ -1,4 +1,8 @@
 <?php
+
+use yii\rest\UrlRule;
+use yii\web\JsonParser;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -13,31 +17,11 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
 
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'rules' => [
-                // your rules go here
-                
-            ],
-            // ...
-        ],
-
-        // UrlManager component for client, address, and profile controllers
-        'clientUrlManager' => [
-            'class' => 'yii\web\UrlManager',
-            'baseUrl' => '/mnt', // Prefix for all URLs
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'client' => 'client/index', // maps `/mnt/client` to `ClientController::actionIndex()`
-                'address' => 'address/index', // maps `/mnt/address` to `AddressController::actionIndex()`
-                'profile' => 'profile/index', // maps `/mnt/profile` to `ProfileController::actionIndex()`
-                // Your custom URL rules here
-            ],
-        ],
-
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => JsonParser::class,
+            ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -57,17 +41,28 @@ return [
                 ],
             ],
         ],
+
         'errorHandler' => [
+            'class' => 'yii\web\ErrorHandler',
             'errorAction' => 'site/error',
         ],
-        /*
-    'urlManager' => [
-    'enablePrettyUrl' => true,
-    'showScriptName' => false,
-    'rules' => [
+
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                ['class' => UrlRule::class, 'controller' => [
+                    'mnt/client' => 'client',
+                    'mnt/perfil' => 'perfil',
+                    'mnt/address' => 'address',
+                ],
+                ],
+            ],
+        ],
+
     ],
-    ],
-     */
-    ],
+    'on beforeRequest' => function ($event) {
+        Yii::$app->set('errorHandler', ['class' => 'frontend\controllers\ErrorHandler']);
+    },
     'params' => $params,
 ];

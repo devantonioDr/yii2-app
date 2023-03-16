@@ -12,6 +12,7 @@ class m230315_185115_create_address_table extends Migration
      */
     public function safeUp()
     {
+
         $this->createTable('address', [
             'id' => $this->primaryKey(),
             'client_id' => $this->integer()->notNull(),
@@ -21,6 +22,8 @@ class m230315_185115_create_address_table extends Migration
             'state' => $this->string()->notNull(),
             'country' => $this->string()->notNull(),
             'zip_code' => $this->string()->notNull(),
+            'created_at' => $this->timestamp()->null(),
+            'updated_at' => $this->timestamp()->null(),
         ]);
 
         $this->addForeignKey('fk-address-client_id', 'address', 'client_id', 'client', 'id', 'CASCADE', 'CASCADE');

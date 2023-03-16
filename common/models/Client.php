@@ -4,6 +4,10 @@ namespace common\models;
 
 use Yii;
 
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "{{%client}}".
  *
@@ -15,14 +19,30 @@ use Yii;
  * @property Address[] $addresses
  * @property Perfil[] $perfils
  */
-class Client extends \yii\db\ActiveRecord
+class Client extends ActiveRecord
+
 {
+
+    
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return '{{%client}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ]
+            ],
+        ];
     }
 
     /**

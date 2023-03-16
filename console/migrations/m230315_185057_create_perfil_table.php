@@ -20,6 +20,8 @@ class m230315_185057_create_perfil_table extends Migration
             'date_of_birth' => $this->date(),
             'gender' => $this->string(),
             'description' => $this->text(),
+            'created_at' => $this->timestamp()->null(),
+            'updated_at' => $this->timestamp()->null()
         ]);
         
         $this->addForeignKey('fk-perfil-user_id', 'perfil', 'client_id', 'client', 'id', 'CASCADE', 'CASCADE');

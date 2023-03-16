@@ -1,8 +1,9 @@
 <?php
 
+use common\models\Client;
 use Faker\Factory;
 use yii\db\Migration;
-use frontend\models\Client;
+use yii\db\Expression;
 
 /**
  * Class m230315_205056_seed_address_table
@@ -15,6 +16,9 @@ class m230315_205056_seed_address_table extends Migration
 
         $clientIds = Client::find()->select(['id'])->column();
 
+        // Gets the current timestamp
+        $now = new Expression('NOW()');
+
         $data = [];
         foreach ($clientIds as $clientId) {
             $data[] = [
@@ -25,10 +29,22 @@ class m230315_205056_seed_address_table extends Migration
                 $faker->stateAbbr,
                 $faker->country,
                 $faker->postcode,
+                $now,
+                $now
             ];
         }
 
-        $this->batchInsert('address', ['client_id', 'address_line_1', 'address_line_2', 'city', 'state', 'country', 'zip_code'], $data);
+        $this->batchInsert('address', [
+            'client_id',
+            'address_line_1',
+            'address_line_2',
+            'city',
+            'state',
+            'country',
+            'zip_code',
+            'created_at',
+            'updated_at'
+        ], $data);
     }
 
     /**
@@ -40,17 +56,17 @@ class m230315_205056_seed_address_table extends Migration
     }
 
     /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
+// Use up()/down() to run migration code without a transaction.
+public function up()
+{
 
-    }
+}
 
-    public function down()
-    {
-        echo "m230315_205056_seed_address_table cannot be reverted.\n";
+public function down()
+{
+echo "m230315_205056_seed_address_table cannot be reverted.\n";
 
-        return false;
-    }
-    */
+return false;
+}
+ */
 }

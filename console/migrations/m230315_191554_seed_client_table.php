@@ -3,6 +3,8 @@
 use Faker\Factory;
 use yii\db\Migration;
 use yii\helpers\Console;
+use yii\db\Expression;
+
 
 /**
  * Class m230315_191554_seed_client_table
@@ -21,14 +23,26 @@ class m230315_191554_seed_client_table extends Migration
 
         $client_data = [];
 
+        
+        // Gets the current timestamp
+        $now = new Expression('NOW()');
+
         for ($i = 1; $i <= 100; $i++) {
             $client_data[] = [
                 $faker->email,
                 $faker->phoneNumber(),
                 $faker->randomElement([0, 1]),
+                $now,
+                $now
             ];
         };
-        $this->batchInsert('client', ['email', 'phone', 'status'], $client_data);
+        $this->batchInsert('client', [
+            'email', 
+            'phone', 
+            'status',
+            'created_at',
+            'updated_at'
+        ], $client_data);
 
         Console::endProgress(true);
     }
