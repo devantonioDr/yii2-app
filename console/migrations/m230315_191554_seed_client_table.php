@@ -27,7 +27,7 @@ class m230315_191554_seed_client_table extends Migration
         // Gets the current timestamp
         $now = new Expression('NOW()');
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 19; $i++) {
             $client_data[] = [
                 $faker->email,
                 $faker->phoneNumber(),
