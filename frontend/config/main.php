@@ -3,6 +3,7 @@
 use yii\rest\UrlRule;
 use yii\web\JsonParser;
 
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -16,7 +17,16 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON,
+            'charset' => 'UTF-8',
+            'on beforeSend' => function ($event) {
+                $headers = $event->sender->headers;
+                $headers->set('Access-Control-Allow-Origin', '*');
+                $headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                $headers->set('Access-Control-Allow-Headers', 'Content-Type');
+            },
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'parsers' => [
@@ -61,8 +71,5 @@ return [
         ],
 
     ],
-    'on beforeRequest' => function ($event) {
-        Yii::$app->set('errorHandler', ['class' => 'frontend\controllers\ErrorHandler']);
-    },
     'params' => $params,
 ];

@@ -19,40 +19,33 @@ class ClientController extends ActiveController
 
     public $modelClass = Client::class;
 
-    
-    // public function actionUpdateModels()
+    // public function update($runValidation = true,$attributeNames = null)
     // {
-    //     Yii::$app->response->format = Response::FORMAT_JSON;
-    //     $post = Yii::$app->request->post();
+    //     // Get the request data.
+    //     $requestData = Yii::$app->request->getBodyParams();
 
-    //     $model1 = Model1::findOne($post['model1']['id']);
-    //     $model2 = Model2::findOne($post['model2']['id']);
-    //     $model3 = Model3::findOne($post['model3']['id']);
+    //     // return ['status' => 'success']; 
+    //     // Load the client model.
+    //     $client = Client::findOne($requestData['id']);
+    //     $client->attributes = $requestData;
+        
+    //     // Load the address model.
+    //     $address = Address::findOne($requestData['address']['id']);
+    //     $address->attributes = $requestData['address'];
 
-    //     if (!$model1 || !$model2 || !$model3) {
-    //         return ['success' => false, 'message' => 'Models not found.'];
-    //     }
+    //     // Load the perfil model.
+    //     $perfil = Perfil::findOne($requestData['perfil']['id']);
+    //     $perfil->attributes = $requestData['perfil'];
 
-    //     $model1->load($post['model1'], '');
-    //     $model2->load($post['model2'], '');
-    //     $model3->load($post['model3'], '');
+    //     // Save the models.
+    //     $success = $client->save() ;
+    //     // && $address->save() && $perfil->save();
 
-    //     $isValid = $model1->validate() && $model2->validate() && $model3->validate();
-
-    //     if ($isValid) {
-    //         $transaction = Yii::$app->db->beginTransaction();
-    //         try {
-    //             $model1->save(false);
-    //             $model2->save(false);
-    //             $model3->save(false);
-    //             $transaction->commit();
-    //             return ['success' => true];
-    //         } catch (\Exception $e) {
-    //             $transaction->rollBack();
-    //             return ['success' => false, 'message' => $e->getMessage()];
-    //         }
+    //     // Check if the models were saved successfully.
+    //     if ($success) {
+    //         return ['status' => 'success'];
     //     } else {
-    //         return ['success' => false, 'message' => 'Validation errors.'];
+    //         return ['status' => 'error', 'errors' => [$client->errors, $address->errors, $perfil->errors]];
     //     }
     // }
 

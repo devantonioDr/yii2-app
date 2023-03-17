@@ -2,13 +2,11 @@
 
 namespace common\models;
 
-use Yii;
-
-
-use yii\db\ActiveRecord;
-use frontend\resource\Perfil;
-use frontend\resource\Address;
 use common\traits\WithTimeStampsTrait;
+use frontend\resource\Address;
+use frontend\resource\Perfil;
+use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%client}}".
@@ -22,11 +20,11 @@ use common\traits\WithTimeStampsTrait;
  * @property Perfil[] $perfils
  */
 class Client extends ActiveRecord
-
 {
 
     use WithTimeStampsTrait;
-    
+
+   
     /**
      * {@inheritdoc}
      */
@@ -34,8 +32,6 @@ class Client extends ActiveRecord
     {
         return '{{%client}}';
     }
-
-
 
     /**
      * {@inheritdoc}
@@ -60,6 +56,24 @@ class Client extends ActiveRecord
             'phone' => 'Phone',
             'status' => 'Status',
         ];
+    }
+
+   
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            // Delete the related Perfil
+            if ($this->perfil !== null) {
+                $this->perfil->delete();
+            }
+            if ($this->address !== null) {
+                $this->address->delete();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

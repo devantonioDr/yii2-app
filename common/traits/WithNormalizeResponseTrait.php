@@ -23,4 +23,16 @@ trait WithNormalizeResponseTrait
 
         return Yii::createObject('yii\rest\Serializer')->serialize($response);
     }
+    public function actionDelete($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = MyModel::findOne($id);
+        $model->delete();
+        return ['success' => true];
+    }
+    public function afterDelete()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return ['status' => $this->response->statusCode];
+    }
 }
